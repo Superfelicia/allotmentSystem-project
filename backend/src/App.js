@@ -31,5 +31,18 @@ app.post('/createUser', (req, res) => {
     });
 })
 
+app.get('/getUser', (req, res) => {
+    connection.connect((err) => {
+        if (err) throw err;
+        const sql = 'SELECT * FROM user';
+
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            console.log('got user');
+            res.send(result);
+        })
+    })
+})
+
 
 app.listen(3001);
