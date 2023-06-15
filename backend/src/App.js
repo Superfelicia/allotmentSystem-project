@@ -44,5 +44,18 @@ app.get('/getUser', (req, res) => {
     })
 })
 
+app.get('/getAllotment', (req, res) => {
+    connection.connect((err) => {
+        if (err) throw err;
+        const sql = 'SELECT * FROM allotment WHERE userId = ?';
+
+        connection.query(sql, [162], (err, result) => {
+            if (err) throw err;
+            console.log('allotment with userId');
+            res.send(result);
+        })
+    })
+})
+
 
 app.listen(3001);

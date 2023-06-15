@@ -104,7 +104,7 @@ const Form = () => {
                 <label>City: </label>
                 <input value={city} type={"text"} onChange={(e) => handleCity(e)}/>
                 <label>Phone number: </label>
-                <input value={phoneNumber} type={"tel"} minLength={10} maxLength={10} placeholder={'0701231231'} onChange={(e) => handlePhoneNumber(e)}/>
+                <input value={phoneNumber} type={"tel"} minLength={11} maxLength={11} placeholder={'070-1231231'} onChange={(e) => handlePhoneNumber(e)}/>
                 <label>Email address: </label>
                 <input value={email} type={"email"} onChange={(e) => handleEmail(e)}/>
                 <label>Spring cleaning: </label>
