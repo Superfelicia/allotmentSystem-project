@@ -2,26 +2,7 @@ import Form from "./components/Form";
 import {useEffect, useState} from "react";
 import Sider from "antd/es/layout/Sider";
 import {Layout, Menu} from "antd";
-
-function PieChartOutlined() {
-    return null;
-}
-
-function DesktopOutlined() {
-    return null;
-}
-
-function UserOutlined() {
-    return null;
-}
-
-function TeamOutlined() {
-    return null;
-}
-
-function FileOutlined() {
-    return null;
-}
+import {ClearOutlined, HomeOutlined, UserOutlined} from '@ant-design/icons';
 
 function App() {
     const [user, setUser] = useState([]);
@@ -44,6 +25,7 @@ function App() {
     }, [])
 
     console.log(user)
+    console.log(allotment)
 
     function getItem(label, key, icon, children) {
         return {
@@ -55,15 +37,13 @@ function App() {
     }
 
     const items = [
-        getItem('Option 1', '1', <PieChartOutlined />),
-        getItem('Option 2', '2', <DesktopOutlined />),
+        getItem('Allotments', '1', <HomeOutlined />),
         getItem('User', 'sub1', <UserOutlined />, [
             getItem('Tom', '3'),
             getItem('Bill', '4'),
             getItem('Alex', '5'),
         ]),
-        getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-        getItem('Files', '9', <FileOutlined />),
+        getItem('Cleaning', '2', <ClearOutlined />),
     ];
 
   return (
