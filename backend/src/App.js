@@ -44,13 +44,26 @@ app.get('/getUser', (req, res) => {
     })
 })
 
+app.get('/getAllAllotments', (req, res) => {
+    connection.connect((err) => {
+        if (err) throw err;
+        const sql = 'SELECT * FROM allotment INNER JOIN user ON allotment.userId=user.id';
+
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            res.send(result);
+        })
+    })
+})
+
 app.get('/getAllotment', (req, res) => {
     console.log(req.query.userId)
     connection.connect((err) => {
         if (err) throw err;
         const sql = 'SELECT * FROM allotment WHERE userId = ?';
+        const userId = req.query.userId;
 
-        connection.query(sql, [req.query.userId], (err, result) => {
+        connection.query(sql, [userId], (err, result) => {
             if (err) throw err;
             console.log('allotment with userId');
             res.send(result);
