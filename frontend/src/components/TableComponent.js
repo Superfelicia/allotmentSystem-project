@@ -22,7 +22,7 @@ const TableComponent = (props) => {
 
     return (
         <Table dataSource={props.allotments}>
-            <Column title="Allotment nr" dataIndex='id' key='id'/>
+            <Column title="Allotment nr" dataIndex='allotmentNumber' key='allotmentNumber'/>
             <Column title="m2" dataIndex='m2' key='m2'/>
             <Column title="First Name" dataIndex="firstName" key="firstName"/>
             <Column title="Last Name" dataIndex="lastName" key="lastName"/>

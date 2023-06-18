@@ -1,10 +1,9 @@
 import TableComponent from "../components/TableComponent";
-import {useState} from "react";
 import useFetch from "../useFetch";
+import {Content} from "antd/es/layout/layout";
+import {Layout} from "antd";
 
 const Allotments = () => {
-    const [allotment, setAllotment] = useState([]);
-
     const {data, loading, error} = useFetch('http://localhost:3001/getAllAllotments');
 
     if (loading) return <h2>Loading...</h2>
