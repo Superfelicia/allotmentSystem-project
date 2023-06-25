@@ -86,5 +86,41 @@ app.get('/getAllotmentsByUserId', (req, res) => {
     })
 })
 
+// PUT/PATCH metod för att kunna ändra user.
+app.put('/updateUser', (req, res) => {
+    const updateUser = req.body;
+    const userId = req.query.userId;
+    console.log(updateUser, userId, 'update user')
+
+
+    connection.connect((err) => {
+        if (err) throw err;
+        const sql = `UPDATE user SET firstName = ?, lastName = ?, address = ?, zipCode = ?, city = ?, phoneNumber = ?, email = ? WHERE id = ?`;
+
+        connection.query(sql, [updateUser.firstName, updateUser.lastName, updateUser.address, updateUser.zipCode, updateUser.city, updateUser.phoneNumber, updateUser.email, userId], (err, result) => {
+            if (err) throw err;
+            console.log('updated user', result);
+            res.send(updateUser);
+        })
+    })
+})
+
+app.delete('/deleteUser', (req, res) => {
+    const deleteUser = req.body;
+    const userId = req.query.userId;
+    console.log(deleteUser, userId, 'deleted user');
+
+    connection.connect((err) => {
+        if (err) throw err;
+        const sql = 'DELETE FROM user WHERE id = ?';
+
+        connection.query(sql, [userId], (err, result) => {
+            if (err) throw err;
+            console.log('deleted user', result);
+            res.send(result);
+        })
+    })
+})
+
 
 app.listen(3001);

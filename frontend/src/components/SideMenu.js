@@ -31,7 +31,7 @@ const SideMenu = () => {
         },
         {
             key: '1',
-            path: "/users",
+            path: "/home",
             label: "Users",
             icon: <UserSwitchOutlined/>,
         },

@@ -1,9 +1,9 @@
 import {Route, Routes} from 'react-router-dom';
 import Allotments from "./pages/Allotments";
-import Users from "./pages/Users";
 import {Layout} from "antd";
 import SideMenu from "./components/SideMenu";
 import UserInfo from "./pages/UserInfo";
+import Home from "./pages/Home";
 
 function App() {
 
@@ -13,7 +13,7 @@ function App() {
                 <SideMenu/>
                 <Routes>
                     <Route path={"/"} element={<Allotments/>}/>
-                    <Route path={"/users"} element={<Users/>}/>
+                    <Route path={"/Home"} element={<Home/>}/>
                     <Route path={"/userInfo"}>
                         <Route index element={<UserInfo/>} />
                         <Route path={":userId"} element={<UserInfo/>} />

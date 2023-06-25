@@ -6,7 +6,6 @@ import UserInfo from "./UserInfo";
 const Allotments = () => {
     const {data, loading, error} = useFetch('http://localhost:3001/getAllAllotments');
     const [selectedUserId, setSelectedUserId] = useState();
-    const [showUserInfo, setShowUserInfo] = useState(false);
 
     if (loading) return <h2>Loading...</h2>
 
@@ -16,9 +15,10 @@ const Allotments = () => {
         setSelectedUserId(userId);
     }
 
-    console.log(selectedUserId);
+    // console.log(selectedUserId);
 
     const OpenUserInfo = ({userId}) => {
+        console.log(userId)
         if (!selectedUserId) return;
         return (
             <UserInfo userId={userId}/>

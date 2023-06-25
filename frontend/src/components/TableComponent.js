@@ -1,15 +1,15 @@
-import {Space, Table} from 'antd';
+import {Table} from 'antd';
 const TableComponent = (props) => {
     const {Column} = Table;
 
     const handleRowClick = (record) => {
         props.onClick(record.userId);
-        console.log(record.userId);
+        // console.log(record.userId);
     }
 
     return (
         <div style={{display: "flex", justifyContent: 'center', paddingTop: '30px'}}>
-            <Table dataSource={props.allotments} id={props.id} style={{cursor: 'pointer'}} rowKey={(record) => record[props.allotmentId]} onRow={(record) => {
+            <Table dataSource={props.allotments} key={props.id} id={props.id} style={{cursor: 'pointer'}} rowKey={(record) => record[props.allotmentId]} onRow={(record) => {
                 return {
                     onClick: (() => handleRowClick(record)),
                 }

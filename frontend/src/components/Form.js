@@ -1,78 +1,33 @@
 import '../styles/style.css';
 import {useState} from "react";
+import Input from "./Input";
+const Form = ({userId}) => {
+    const [mode, setMode] = useState(false);
+    const [user, setUser] = useState({
+        firstName: '',
+        lastName: '',
+        address: '',
+        zipCode: 0,
+        city: '',
+        phoneNumber: '',
+        email: '',
+        springCleaning: null,
+        fallCleaning: null,
+    });
+    const [updateUser, setUpdateUser] = useState({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        address: user.address,
+        zipCode: user.zipCode,
+        city: user.city,
+        phoneNumber: user.phoneNumber,
+        email: user.email,
+        springCleaning: user.springCleaning,
+        fallCleaning: user.fallCleaning,
+    });
 
-const Form = () => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [address, setAddress] = useState('');
-    const [zipCode, setZipCode] = useState('');
-    const [city, setCity] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [springCleaning, setSpringCleaning] = useState(false);
-    const [fallCleaning, setFallCleaning] = useState(false);
-    let [user = {
-        firstName: firstName,
-        lastName: lastName,
-        address: address,
-        zipCode: zipCode,
-        city: city,
-        phoneNumber: phoneNumber,
-        email: email,
-        springCleaning: springCleaning,
-        fallCleaning: fallCleaning,
-    }, setUser] = useState();
 
-    const handleFirstName = (e) => {
-        const value = e.target.value;
-        setFirstName(value);
-    }
-
-    const handleLastName = (e) => {
-        setLastName(e.target.value);
-    }
-
-    const handleAddress = (e) => {
-        setAddress(e.target.value);
-    }
-
-    const handleZipCode = (e) => {
-        setZipCode(e.target.value);
-    }
-
-    const handleCity = (e) => {
-        setCity(e.target.value);
-    }
-
-    const handlePhoneNumber = (e) => {
-        setPhoneNumber(e.target.value);
-    }
-
-    const handleEmail = (e) => {
-        setEmail(e.target.value);
-    }
-
-    const handleSpringCleaning = (e) => {
-        setSpringCleaning(e.target.checked);
-        if (springCleaning === false) {
-            setSpringCleaning(true);
-        } else {
-            setSpringCleaning(false);
-        }
-        console.log(springCleaning);
-    }
-
-    const handleFallCleaning = (e) => {
-        setFallCleaning(e.target.checked);
-        if (fallCleaning === false) {
-            setFallCleaning(true);
-        } else {
-            setFallCleaning(false);
-        }
-        console.log(fallCleaning);
-    }
-
-    const handleSubmit = (e) => {
+    const handleCreateUser = (e) => {
         e.preventDefault();
 
         fetch('http://localhost:3001/createUser', {
@@ -84,34 +39,100 @@ const Form = () => {
                 user: user,
             })
         })
-        e.preventDefault();
-        setUser(user);
-        console.log(user);
-        console.log('New user added');
+            .then(response => {
+                if (response.ok) {
+                    console.log('New user added');
+                } else {
+                    console.log('Failed to add new user');
+                }
+            })
+            .catch(error => {
+                console.error('Error occurred while adding new user:', error);
+            });
     }
 
+    const handleUpdateUser = (e) => {
+        e.preventDefault();
+
+        fetch(`http://localhost:3001/updateUser?userId=${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updateUser)
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('User updated successfully');
+                } else {
+                    console.log('Failed to update user');
+                }
+            })
+            .catch(error => {
+                console.error('Error occurred while updating user:', error);
+            });
+    }
+
+    const handleDeleteUser = (e) => {
+        e.preventDefault()
+
+        fetch(`http://localhost:3001/deleteUser?userId=${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('User was deleted successfully');
+                } else {
+                    console.log('Failed to delete user');
+                }
+            })
+            .catch(error => {
+                console.log('Error occurred while deleting user:', error);
+            });
+    }
+
+    const handleInputChange = (event) => {
+        const {name, value} = event.target;
+
+        setUser(prevUser => ({
+            ...prevUser,
+            [name]: value
+        }));
+
+        setUpdateUser(prevUser => ({
+            ...prevUser,
+            [name]: value
+        }));
+    }
+
+
     return (
-        <div className='form-container'>
-            <form className='form' onSubmit={(e) => handleSubmit(e)}>
-                <label>First name: </label>
-                <input value={firstName} type={"text"} onChange={(e) => handleFirstName(e)}/>
-                <label>Last name: </label>
-                <input value={lastName} type={"text"} onChange={(e) => handleLastName(e)}/>
-                <label>Address: </label>
-                <input value={address} type={"text"} onChange={(e) => handleAddress(e)}/>
-                <label>Zip code: </label>
-                <input value={zipCode} type={"text"} minLength={5} maxLength={5} onChange={(e) => handleZipCode(e)}/>
-                <label>City: </label>
-                <input value={city} type={"text"} onChange={(e) => handleCity(e)}/>
-                <label>Phone number: </label>
-                <input value={phoneNumber} type={"tel"} minLength={11} maxLength={11} placeholder={'070-1231231'} onChange={(e) => handlePhoneNumber(e)}/>
-                <label>Email address: </label>
-                <input value={email} type={"email"} onChange={(e) => handleEmail(e)}/>
-                <label>Spring cleaning: </label>
-                <input type={"checkbox"} checked={springCleaning} onChange={handleSpringCleaning}/>
-                <label>Fall cleaning: </label>
-                <input type={"checkbox"} checked={fallCleaning} onChange={handleFallCleaning}/>
-                <button>Submit</button>
+        <div className='user-info-container form-container'>
+            <h2>{userId}</h2>
+
+            <form className='form' onSubmit={mode ? handleCreateUser : handleUpdateUser}>
+                <Input name={"firstName"} type={"text"} label={"First name"} value={user.firstName}
+                       onChange={handleInputChange}/>
+                <Input name={"lastName"} type={"text"} label={"Last name"} value={user.lastName}
+                       onChange={handleInputChange}/>
+                <Input name={"address"} type={"text"} label={"Address"} value={user.address}
+                       onChange={handleInputChange}/>
+                <Input name={"zipCode"} type={"text"} label={"Zip code"} value={user.zipCode}
+                       onChange={handleInputChange}/>
+                <Input name={"city"} type={"text"} label={"City"} value={user.city} onChange={handleInputChange}/>
+                <Input name={"phoneNumber"} type={"tel"} label={"Phone number"} value={user.phoneNumber}
+                       onChange={handleInputChange}/>
+                <Input name={"email"} type={"email"} label={"Email"} value={user.email} onChange={handleInputChange}/>
+
+                <div style={{display: "flex", justifyContent: 'space-between', marginTop: '25px'}}>
+                    <button type="submit">{'UPDATE USER'}</button>
+                    <button type="submit" onClick={handleDeleteUser}>{'DELETE USER'}</button>
+                </div>
+
             </form>
         </div>
     );

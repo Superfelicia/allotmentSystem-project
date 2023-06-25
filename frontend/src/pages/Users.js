@@ -1,33 +1,31 @@
 import useFetch from "../useFetch";
-import Form from "../components/Form";
 
 const Users = ({userId}) => {
     const {data, loading, error} = useFetch('http://localhost:3001/getAllotmentUser');
     let allotmentUser;
-    let userArray = [];
+    let userArrayWithSameUserId = [];
 
     if (loading) return <h2>Loading...</h2>
 
     if (error) console.log(error);
 
-    console.log(data)
+    // console.log(data)
 
     const allotmentUsers = () => {
         for (let i = 0; i < data.length; i++) {
+            allotmentUser = data[i];
             if (data[i].userId === userId) {
-                allotmentUser = data[i];
+                userArrayWithSameUserId.push(allotmentUser);
             }
         }
-        userArray.push(allotmentUser);
-        console.log(userArray);
+        // console.log(userArrayWithSameUserId);
     }
 
     allotmentUsers();
 
-
     return (
-        <div>
-            {userArray.map((user, id) => {
+        <>
+            {userArrayWithSameUserId.map((user, id) => {
                 return (
                     <div key={user.allotmentNumber} id={id}>
                         <p>
@@ -42,7 +40,7 @@ const Users = ({userId}) => {
                     </div>
                 )
             })}
-        </div>
+        </>
     );
 }
 
