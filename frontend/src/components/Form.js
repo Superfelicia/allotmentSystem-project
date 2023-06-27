@@ -1,7 +1,7 @@
 import '../styles/style.css';
 import {useState} from "react";
 import Input from "./Input";
-const Form = ({userId}) => {
+const Form = ({userId, userValue}) => {
     const [mode, setMode] = useState(false);
     const [user, setUser] = useState({
         firstName: '',
@@ -28,8 +28,9 @@ const Form = ({userId}) => {
 
 
     const handleCreateUser = (e) => {
-        e.preventDefault();
+        setMode(true);
 
+        e.preventDefault();
         fetch('http://localhost:3001/createUser', {
             method: 'POST',
             headers: {
@@ -111,30 +112,27 @@ const Form = ({userId}) => {
 
 
     return (
-        <div className='user-info-container form-container'>
-            <h2>{userId}</h2>
-
+        <>
             <form className='form' onSubmit={mode ? handleCreateUser : handleUpdateUser}>
-                <Input name={"firstName"} type={"text"} label={"First name"} value={user.firstName}
+                <Input name={"firstName"} type={"text"} label={"First name"} value={userValue.firstName}
                        onChange={handleInputChange}/>
-                <Input name={"lastName"} type={"text"} label={"Last name"} value={user.lastName}
+                <Input name={"lastName"} type={"text"} label={"Last name"} value={userValue.lastName}
                        onChange={handleInputChange}/>
-                <Input name={"address"} type={"text"} label={"Address"} value={user.address}
+                <Input name={"address"} type={"text"} label={"Address"} value={userValue.address}
                        onChange={handleInputChange}/>
-                <Input name={"zipCode"} type={"text"} label={"Zip code"} value={user.zipCode}
+                <Input name={"zipCode"} type={"text"} label={"Zip code"} value={userValue.zipCode}
                        onChange={handleInputChange}/>
-                <Input name={"city"} type={"text"} label={"City"} value={user.city} onChange={handleInputChange}/>
-                <Input name={"phoneNumber"} type={"tel"} label={"Phone number"} value={user.phoneNumber}
+                <Input name={"city"} type={"text"} label={"City"} value={userValue.city} onChange={handleInputChange}/>
+                <Input name={"phoneNumber"} type={"tel"} label={"Phone number"} value={userValue.phoneNumber}
                        onChange={handleInputChange}/>
-                <Input name={"email"} type={"email"} label={"Email"} value={user.email} onChange={handleInputChange}/>
+                <Input name={"email"} type={"email"} label={"Email"} value={userValue.email} onChange={handleInputChange}/>
 
                 <div style={{display: "flex", justifyContent: 'space-between', marginTop: '25px'}}>
-                    <button type="submit">{'UPDATE USER'}</button>
+                    <button type="submit" disabled={true}>{mode ? 'CREATE USER' : 'UPDATE USER'}</button>
                     <button type="submit" onClick={handleDeleteUser}>{'DELETE USER'}</button>
                 </div>
-
             </form>
-        </div>
+        </>
     );
 }
 

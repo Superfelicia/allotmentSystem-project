@@ -1,28 +1,14 @@
 import {useState} from "react";
 import {UserSwitchOutlined, HomeOutlined, UserOutlined} from "@ant-design/icons";
-import {Layout, Menu} from "antd";
+import {Menu} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Link} from 'react-router-dom';
 
 const SideMenu = () => {
     const [collapsed, setCollapsed] = useState(false);
-    // const getItem = (label, key, icon, children, navigation) => {
-    //     return {
-    //         key,
-    //         icon,
-    //         children,
-    //         label,
-    //         navigation,
-    //     };
-    // }
+
 
     const items = [
-        // {
-        //     key: 0,
-        //     path: "/",
-        //     label: "Home",
-        //     icon: <HomeOutlined/>,
-        // },
         {
             key: '0',
             path: "/",
@@ -31,7 +17,7 @@ const SideMenu = () => {
         },
         {
             key: '1',
-            path: "/home",
+            path: "/users",
             label: "Users",
             icon: <UserSwitchOutlined/>,
         },

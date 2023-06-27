@@ -1,5 +1,5 @@
 import useFetch from "../useFetch";
-import Users from "./Users";
+import AllotmentUsers from "./AllotmentUsers";
 
 const UserInfo = ({userId}) => {
     const {data, loading, error} = useFetch(`http://localhost:3001/getAllotmentsByUserId?userId=${userId}`);
@@ -15,24 +15,22 @@ const UserInfo = ({userId}) => {
 
     return (
         <>
-            <div className='user-info-container'>
-                {data && data.length > 0 ? (
-                    <div>
-                        {data.map((allotment) => (
-                            <div key={allotment.id} id={userId}>
-                                <div style={{display:"flex", flexDirection: 'row', alignItems: "center"}}>
-                                    <h2>User id: {userId} </h2>
-                                    <h3> m2: {allotment.m2} </h3>
-                                    <h3> allotment number: {allotment.id}</h3>
-                                </div>
-                                <Users userId={userId}/>
+            {data && data.length > 0 ? (
+                <div>
+                    {data.map((allotment) => (
+                        <div key={allotment.id} id={userId}>
+                            <div style={{display: "flex", flexDirection: 'row', alignItems: "center"}}>
+                                <h2>User id: {userId} </h2>
+                                <h3> m2: {allotment.m2} </h3>
+                                <h3> allotment number: {allotment.id}</h3>
                             </div>
-                        ))}
-                    </div>
-                ) : (
-                    <h2>No data available</h2>
-                )}
-            </div>
+                            <AllotmentUsers userId={userId}/>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <h2>No data available</h2>
+            )}
         </>
 
     )

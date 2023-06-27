@@ -2,10 +2,12 @@ import TableComponent from "../components/TableComponent";
 import useFetch from "../useFetch";
 import {useState} from "react";
 import UserInfo from "./UserInfo";
+import Modal from '../components/Modal';
 
 const Allotments = () => {
     const {data, loading, error} = useFetch('http://localhost:3001/getAllAllotments');
     const [selectedUserId, setSelectedUserId] = useState();
+    const [showModal, setShowModal] = useState(false);
 
     if (loading) return <h2>Loading...</h2>
 
@@ -13,16 +15,7 @@ const Allotments = () => {
 
     const handleAllotmentClick = (userId) => {
         setSelectedUserId(userId);
-    }
-
-    // console.log(selectedUserId);
-
-    const OpenUserInfo = ({userId}) => {
-        console.log(userId)
-        if (!selectedUserId) return;
-        return (
-            <UserInfo userId={userId}/>
-        )
+        setShowModal(true);
     }
 
     return (
@@ -31,9 +24,11 @@ const Allotments = () => {
                 onClick={handleAllotmentClick}
                 allotments={data}
                 allotmentId={selectedUserId}/>
-            {selectedUserId && (
-                <OpenUserInfo userId={selectedUserId}/>
-            )}
+            {showModal &&
+                <Modal closeModal={() => setShowModal(false)} showModal={showModal}>
+                    <UserInfo userId={selectedUserId} />
+                </Modal>
+            }
         </>
     );
 }

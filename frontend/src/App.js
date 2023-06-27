@@ -3,7 +3,8 @@ import Allotments from "./pages/Allotments";
 import {Layout} from "antd";
 import SideMenu from "./components/SideMenu";
 import UserInfo from "./pages/UserInfo";
-import Home from "./pages/Home";
+import Users from "./pages/Users";
+import Modal from "./components/Modal";
 
 function App() {
 
@@ -13,12 +14,13 @@ function App() {
                 <SideMenu/>
                 <Routes>
                     <Route path={"/"} element={<Allotments/>}/>
-                    <Route path={"/Home"} element={<Home/>}/>
+                    <Route path={"/Users"} element={<Users/>}/>
                     <Route path={"/userInfo"}>
                         <Route index element={<UserInfo/>} />
                         <Route path={":userId"} element={<UserInfo/>} />
                     </Route>
                 </Routes>
+                <Modal></Modal>
             </Layout>
 
         </>
