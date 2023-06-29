@@ -1,15 +1,18 @@
 import {useEffect, useState} from "react";
 
 const Input = (props) => {
-    const {label, type = 'text', name, value} = props;
-
+    const {label, type = 'text', name, value, onChange} = props;
     const [val, setVal] = useState(value);
 
-    console.log(val);
+    useEffect(() => {
+        setVal(value);
+    }, [value])
 
     const handleChange = (v) => {
         setVal(v.target.value);
-        // en till funktion för att sätta värdet i form-parenten
+        if (onChange) {
+            onChange(v.target.value);
+        }
     }
 
     return (

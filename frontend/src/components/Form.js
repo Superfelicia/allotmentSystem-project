@@ -14,17 +14,7 @@ const Form = ({userId, userValue}) => {
         springCleaning: null,
         fallCleaning: null,
     });
-    const [updateUser, setUpdateUser] = useState({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        address: user.address,
-        zipCode: user.zipCode,
-        city: user.city,
-        phoneNumber: user.phoneNumber,
-        email: user.email,
-        springCleaning: user.springCleaning,
-        fallCleaning: user.fallCleaning,
-    });
+    const [updateUser, setUpdateUser] = useState({...userValue});
 
 
     const handleCreateUser = (e) => {
@@ -96,16 +86,16 @@ const Form = ({userId, userValue}) => {
             });
     }
 
-    const handleInputChange = (event) => {
-        const {name, value} = event.target;
+    const handleInputChange = (name, value) => {
 
         setUser(prevUser => ({
             ...prevUser,
             [name]: value
         }));
 
-        setUpdateUser(prevUser => ({
-            ...prevUser,
+
+        setUpdateUser(prevUpdateUser => ({
+            ...prevUpdateUser,
             [name]: value
         }));
     }
@@ -115,17 +105,18 @@ const Form = ({userId, userValue}) => {
         <>
             <form className='form' onSubmit={mode ? handleCreateUser : handleUpdateUser}>
                 <Input name={"firstName"} type={"text"} label={"First name"} value={userValue.firstName}
-                       onChange={handleInputChange}/>
+                       onChange={(value) => handleInputChange("firstName", value)}/>
                 <Input name={"lastName"} type={"text"} label={"Last name"} value={userValue.lastName}
-                       onChange={handleInputChange}/>
+                       onChange={(value) => handleInputChange("lastName", value)}/>
                 <Input name={"address"} type={"text"} label={"Address"} value={userValue.address}
-                       onChange={handleInputChange}/>
+                       onChange={(value) => handleInputChange("address", value)}/>
                 <Input name={"zipCode"} type={"text"} label={"Zip code"} value={userValue.zipCode}
-                       onChange={handleInputChange}/>
-                <Input name={"city"} type={"text"} label={"City"} value={userValue.city} onChange={handleInputChange}/>
+                       onChange={(value) => handleInputChange("zipCode", value)}/>
+                <Input name={"city"} type={"text"} label={"City"} value={userValue.city}
+                       onChange={(value) => handleInputChange("city", value)}/>
                 <Input name={"phoneNumber"} type={"tel"} label={"Phone number"} value={userValue.phoneNumber}
-                       onChange={handleInputChange}/>
-                <Input name={"email"} type={"email"} label={"Email"} value={userValue.email} onChange={handleInputChange}/>
+                       onChange={(value) => handleInputChange("phoneNumber", value)}/>
+                <Input name={"email"} type={"email"} label={"Email"} value={userValue.email} onChange={(value) => handleInputChange("email", value)}/>
 
                 <div style={{display: "flex", justifyContent: 'space-between', marginTop: '25px'}}>
                     <button type="submit" disabled={true}>{mode ? 'CREATE USER' : 'UPDATE USER'}</button>
